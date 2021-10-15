@@ -1,2 +1,2 @@
-# doc-internal
-This is the doc place for internal review. Do not open source forever.
+# docs
+This is the doc place for anyone to review.
