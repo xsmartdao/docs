@@ -9,6 +9,9 @@ Transitions that called by users via UI.
 | Name | Type | Description |
 | ---------------| ----------|---------|
 | `deposit`         | `reverse: ByStr20, amount: Uint128` | deposit the underlying asset into the reserve. |
+| `borrow` | | |
+| `redeem` | | |
+| `repay` | | |
 
 
 ### Admin transitions
@@ -17,7 +20,11 @@ Transitions that called by admin-cli.
 
 | Name | Type | Description |
 | ---------------| ----------|---------|
-| `set_configurator`         | `configurator: ByStr20` | change configurator address. |
+| `set_configurator`         | `configurator: ByStr20` | changes configurator address. |
+| `init_reserve`         | `reserve: ByStr20, underlying_asset_decimals: Uint256, interest_rate_strategy_address: ByStr20, aToken_address: ByStr20, reserve_name: String, reserve_symbol: String` | initializes a reserve |
+| `set_reserve_interest_rate_strategy_address` | `reserve: ByStr20, rate_strategy_address: ByStr20` | updates the address of the interest rate strategy contract |
+| `enable_borrowing_on_reverse` | `reserve: ByStr20, stable_borrow_rate_enabled: Bool` | enables borrowing on a reserve. Also sets the stable rate borrowing |
+| `disable_borrowing_on_reverse` | `reserve: ByStr20` | disables borrowing on a reserve |
 
 
 ## AToken Contract
