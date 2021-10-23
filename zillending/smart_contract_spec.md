@@ -45,6 +45,21 @@ Transitions that called by admin-cli.
 | ---------------| ----------|---------|
 | `mint_on_deposit`         | `account: ByStr20, amount: Uint256, reserve_normalized_income: Uint256` | Only can be called by core contract. Mints token in the event of the users depositing the underlying asset into the lending pool. |
 
+## Stragety Contract
+
+We deploy one strategy contract for every reserve added. The stragety (see following) fields are fetched by core contract via remote read.
+
+### Fields
+
+| Name | Type | Description |
+| ---------------| ----------|---------|
+| `base_variable_borrow_rate`         | `Uint256` | base variable borrow rate when Utlization rate = 0. Expressed in ray. |
+| `variable_rate_slope1`         | `Uint256` | slope of the variable interest curve when utilization rate > 0 and <= optimal_utilization_rate. Expressed in ray. |
+| `variable_rate_slope2`         | `Uint256` | slope of the variable interest curve when utilization rate > optimal_utilization_rate. Expressed in ray. |
+| `stable_rate_slope1`         | `Uint256` | slope of the stable interest curve when utilization rate > 0 and <= optimal_utilization_rate. Expressed in ray. |
+| `stable_rate_slope2`         | `Uint256` | slope of the stable interest curve when utilization rate > optimal_utilization_rate. Expressed in ray. |
+
+
 ## Formula
 
 ### Constants
