@@ -26,7 +26,7 @@ Transitions that called by admin-cli.
 
 | Name | Type | Description |
 | ---------------| ----------|---------|
-| `calculate_cumulated_balance_internal`         | `user: ByStr20, balance: Uint256, reserve_normalized_income: Uint256` | calculate the interest accrued by user on a specific balance. `reserve_normalized_income` shoule be calculated by core contract, but we now need use oracle server as the lacking of the external library feature. |
+| `calculate_cumulated_balance_internal`         | `user: ByStr20, balance: Uint256, reserve_normalized_income: Uint256` | calculate the interest accrued by user on a specific balance. `reserve_normalized_income` should be calculated by core contract, but we now need use oracle server as the lacking of the external library feature. |
 
 ## Formula
 
