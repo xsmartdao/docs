@@ -39,3 +39,13 @@ Parameters: rate, last_update_timestamp
 2. time_delta = time_difference.way_to_ray().ray_div(seconds_per_year.wad_to_ray())
 3. rate.ray_mul(time_delta).add(ray)
 ```
+
+### Compounded Interest
+
+```
+Parameters: rate, last_update_timestamp
+
+1. time_difference = current_timestamp - last-update_timestamp
+2. rate_per_second = rate.div(seconds_per_year)
+3. rate_per_second.add(ray).ray_pow(time_difference)
+```
