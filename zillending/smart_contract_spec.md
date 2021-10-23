@@ -32,8 +32,10 @@ let wad_ray_ratio = Uint256 1000000000
 
 ### Linear Interest
 
+```
 Parameters: rate, last_update_timestamp
 
 1. time_difference = current_timestamp - last_update_timestamp
 2. time_delta = time_difference.way_to_ray().ray_div(seconds_per_year.wad_to_ray())
 3. rate.ray_mul(time_delta).add(ray)
+```
