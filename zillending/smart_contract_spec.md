@@ -1,6 +1,8 @@
 # Zillending Protocol
 
-## User transitions
+## Core Contract
+
+### User transitions
 
 Transitions that called by users via UI.
 
@@ -9,7 +11,7 @@ Transitions that called by users via UI.
 | `deposit`         | `reverse: ByStr20, amount: Uint128` | deposit the underlying asset into the reserve. |
 
 
-## Admin transitions
+### Admin transitions
 
 Transitions that called by admin-cli.
 
@@ -17,6 +19,14 @@ Transitions that called by admin-cli.
 | ---------------| ----------|---------|
 | `set_configurator`         | `configurator: ByStr20` | change configurator address. |
 
+
+## AToken Contract
+
+### Internal Functions
+
+| Name | Type | Description |
+| ---------------| ----------|---------|
+| `calculate_cumulated_balance_internal`         | `user: ByStr20, balance: Uint256, reserve_normalized_income: Uint256` | calculate the interest accrued by user on a specific balance. `reserve_normalized_income` shoule be calculated by core contract, but we now need use oracle server as the lacking of the external library feature. |
 
 ## Formula
 
