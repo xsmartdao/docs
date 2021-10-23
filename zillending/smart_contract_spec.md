@@ -59,3 +59,30 @@ Parameters: rate, last_update_timestamp
 2. rate_per_second = rate.div(seconds_per_year)
 3. rate_per_second.add(ray).ray_pow(time_difference)
 ```
+
+
+## Oracle Mechanism
+
+1. oracle server is the verifier of the contracts.
+2. oracle server uses schnorr algorithm to sign the hash of the message.
+3. contract side use oracle server's public key to verify the hash of the message, further, extra parameters from the message.
+
+
+```
+procedure verifySignature(msg: String, sign: ByStr64)
+  data_to_verify = builtin sha256hash msg;
+  pubk <- verifier;
+  e = {_eventname: "RawDataToVerifySignature"; data_to_verify: data_to_verify; sign: sign; pubk: pubk};
+  event e;
+  data = builtin to_bystr data_to_verify;
+  is_valid = builtin schnorr_verify pubk data sign;
+  match is_valid with
+    | True =>
+      e2 = {_eventname: "SignatureValid"};
+      event e2
+    | False =>
+      err = InvalidSignature;
+      ThrowError err
+  end
+end
+```
