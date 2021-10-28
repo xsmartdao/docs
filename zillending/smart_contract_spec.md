@@ -10,6 +10,11 @@
 | `year_of_seconds` | Number of seconds in a year: 31536000 |
 | `yearly_period` | `delta_time / year_of_seconds` |
 | `total_liquidity` | Total amount of liquidity available in the reserve. The decimals of the this value depend on the decimals of the currency |
+| `total_stable_borrows` | Total amount of liquidity borrowed at a stable rate. The decimals of this value depend on the decimals of the currency |
+| `total_variable_borrows` | Total amount of liquidity borrowed at a variable rate. The decimals of this value depend on the decimals of the currency |
+| `total_borrows` | Total amount of liquidity borrowed. The decimals of this value depend on the decimals of the currency. `total_borrows = total_stable_borrows + total_variable_borrows` |
+| `utilization rate` | Representing the utilization of the deposited funds `utilization = total_borrows / total_liquidity`|
+| `target utilization rate` | The utilization rate targeted by the model, beyond the variable interest rate rises sharply |
 
 ## Core Contract
 
@@ -19,7 +24,7 @@ Transitions that called by users via UI.
 
 | Name | Type | Description |
 | ---------------| ----------|---------|
-| `deposit`         | `reverse: ByStr20, amount: Uint128` | deposit the underlying asset into the reserve. |
+| `deposit`         | `reverse: ByStr20, amount: Uint128` | deposit the underlying asset into the reserve |
 | `borrow` | | |
 | `redeem` | | |
 | `repay` | | |
