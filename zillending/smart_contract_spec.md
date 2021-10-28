@@ -9,17 +9,17 @@
 | `delta_time` | `current_timestamp - last_updated_timestamp`
 | `year_of_seconds` | Number of seconds in a year: 31536000 |
 | `yearly_period` | `delta_time / year_of_seconds` |
-| `total_liquidity` | Total amount of liquidity available in the reserve. The decimals of the this value depend on the decimals of the currency |
+| `total_liquidity` | Total amount of liquidity available in the reserve. The decimals of the this value depend on the decimals of the currency. (unconfirmed comments: the balance of this protocol on the reserve) |
 | `total_stable_borrows` | Total amount of liquidity borrowed at a stable rate. The decimals of this value depend on the decimals of the currency |
 | `total_variable_borrows` | Total amount of liquidity borrowed at a variable rate. The decimals of this value depend on the decimals of the currency |
 | `total_borrows` | Total amount of liquidity borrowed. The decimals of this value depend on the decimals of the currency. `total_borrows = total_stable_borrows + total_variable_borrows` |
 | `utilization_rate` | Representing the utilization of the deposited funds `utilization = total_borrows / total_liquidity`|
 | `target_utilization_rate` | The utilization rate targeted by the model, beyond the variable interest rate rises sharply |
 | `base_variable_borrow_rate` | Constant for `total_borrows == 0`. Expression in ray |
-| `variable_rate_slope1` | Slope of the variable interest curve when utilization rate > 0 and <= optimal_utilization_rate. Expressed in ray |
-| `variable_rate_slope2` | Slope of the variable interest curve when utilization rate > optimal_utilization_rate. Expressed in ray |
-| `stable_rate_slope1` | Slope of the stable interest curve when utilization rate > 0 and <= optimal_utilization_rate. Expressed in ray |
-| `stable_rate_slope2` | Slope of the stable interest curve when utilization rate > optimal_utilization_rate. Expressed in ray |
+| `variable_rate_slope1` | Slope of the variable interest curve when `utilization_rate >` 0 and <= `optimal_utilization_rate`. Expressed in ray |
+| `variable_rate_slope2` | Slope of the variable interest curve when `utilization_rate > optimal_utilization_rate`. Expressed in ray |
+| `stable_rate_slope1` | Slope of the stable interest curve when `utilization_rate > 0 and <= optimal_utilization_rate`. Expressed in ray |
+| `stable_rate_slope2` | Slope of the stable interest curve when `utilization_rate > optimal_utilization_rate`. Expressed in ray |
 | `variable_borrow_rate` | |
 | `average_stable_borrow_rate` | |
 | `overall_borrow_rate` | Overall borrow rate of the reserve, calculated as the weighted average between the `total_borrows_stable` and the `total_borrows_variable`. `(total_variable_borrows * variable_borrow_rate + total_stable_borrows * average_stable_borrow_rate) / total_borrows` |
