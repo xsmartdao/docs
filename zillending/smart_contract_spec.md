@@ -13,8 +13,18 @@
 | `total_stable_borrows` | Total amount of liquidity borrowed at a stable rate. The decimals of this value depend on the decimals of the currency |
 | `total_variable_borrows` | Total amount of liquidity borrowed at a variable rate. The decimals of this value depend on the decimals of the currency |
 | `total_borrows` | Total amount of liquidity borrowed. The decimals of this value depend on the decimals of the currency. `total_borrows = total_stable_borrows + total_variable_borrows` |
-| `utilization rate` | Representing the utilization of the deposited funds `utilization = total_borrows / total_liquidity`|
-| `target utilization rate` | The utilization rate targeted by the model, beyond the variable interest rate rises sharply |
+| `utilization_rate` | Representing the utilization of the deposited funds `utilization = total_borrows / total_liquidity`|
+| `target_utilization_rate` | The utilization rate targeted by the model, beyond the variable interest rate rises sharply |
+| `base_variable_borrow_rate` | Constant for `total_borrows == 0`. Expression in ray |
+| `variable_rate_slope1` | Slope of the variable interest curve when utilization rate > 0 and <= optimal_utilization_rate. Expressed in ray |
+| `variable_rate_slope2` | Slope of the variable interest curve when utilization rate > optimal_utilization_rate. Expressed in ray |
+| `stable_rate_slope1` | Slope of the stable interest curve when utilization rate > 0 and <= optimal_utilization_rate. Expressed in ray |
+| `stable_rate_slope2` | Slope of the stable interest curve when utilization rate > optimal_utilization_rate. Expressed in ray |
+| `variable_borrow_rate` | |
+| `average_stable_borrow_rate` | |
+| `overall_borrow_rate` | Overall borrow rate of the reserve, calculated as the weighted average between the `total_borrows_stable` and the `total_borrows_variable`. `(total_variable_borrows * variable_borrow_rate + total_stable_borrows * average_stable_borrow_rate) / total_borrows` |
+
+
 
 ## Core Contract
 
