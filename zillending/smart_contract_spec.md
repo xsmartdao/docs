@@ -1,5 +1,57 @@
 # Zillending Protocol
 
+## Oracle Mechanism
+
+1. oracle server is the verifier of the contracts.
+2. oracle server uses schnorr algorithm to sign the hash of the message.
+3. contract side use oracle server's public key to verify the hash of the message, further, extra parameters from the message.
+
+
+```
+procedure verifySignature(msg: String, sign: ByStr64)
+  data_to_verify = builtin sha256hash msg;
+  pubk <- verifier;
+  e = {_eventname: "RawDataToVerifySignature"; data_to_verify: data_to_verify; sign: sign; pubk: pubk};
+  event e;
+  data = builtin to_bystr data_to_verify;
+  is_valid = builtin schnorr_verify pubk data sign;
+  match is_valid with
+    | True =>
+      e2 = {_eventname: "SignatureValid"};
+      event e2
+    | False =>
+      err = InvalidSignature;
+      ThrowError err
+  end
+end
+```
+
+## Callback Mechanism
+
+1. Issue two messages, one for remote call, one for self call.
+2. Complte the logic in the self-called transition.
+
+```
+transition MintOnDepositInit(account: ByStr20, amount: Uint128, this_timestamp: Uint256)
+  IsCoreContract _sender;
+  reserve <- underlying_asset_address;
+  msg_to_core = {_tag: "set_reserve_normalized_income"; _recipient: _sender; _amount: zero;
+                    reserve: reserve; this_timestamp: this_timestamp };
+  msg_to_self = {_tag: "MintOnDepositComplete"; _recipient:_this_address; _amount: zero;
+                    account: account; amount: amount; this_timestamp: this_timestamp };
+  msgs = two_msgs msg_to_core msg_to_self;
+  send msgs
+end
+
+transition MintOnDepositComplete(account: ByStr20, amount: Uint128, this_timestamp: Uint256)
+  IsSelf _sender;
+  core_reader <- core_contract_reader;
+  reserve_normalized_income_temp <- &core_reader.reserve_normalized_income_temp;
+  ...
+end
+
+```
+
 ## Formal Definitions
 
 | Name | Description |
@@ -116,31 +168,4 @@ Parameters: rate, last_update_timestamp
 1. time_difference = current_timestamp - last-update_timestamp
 2. rate_per_second = rate.div(seconds_per_year)
 3. rate_per_second.add(ray).ray_pow(time_difference)
-```
-
-
-## Oracle Mechanism
-
-1. oracle server is the verifier of the contracts.
-2. oracle server uses schnorr algorithm to sign the hash of the message.
-3. contract side use oracle server's public key to verify the hash of the message, further, extra parameters from the message.
-
-
-```
-procedure verifySignature(msg: String, sign: ByStr64)
-  data_to_verify = builtin sha256hash msg;
-  pubk <- verifier;
-  e = {_eventname: "RawDataToVerifySignature"; data_to_verify: data_to_verify; sign: sign; pubk: pubk};
-  event e;
-  data = builtin to_bystr data_to_verify;
-  is_valid = builtin schnorr_verify pubk data sign;
-  match is_valid with
-    | True =>
-      e2 = {_eventname: "SignatureValid"};
-      event e2
-    | False =>
-      err = InvalidSignature;
-      ThrowError err
-  end
-end
 ```
