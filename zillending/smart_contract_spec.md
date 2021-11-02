@@ -75,6 +75,8 @@ end
 | `variable_borrow_rate` | |
 | `average_stable_borrow_rate` | |
 | `overall_borrow_rate` | Overall borrow rate of the reserve, calculated as the weighted average between the `total_borrows_stable` and the `total_borrows_variable`. `(total_variable_borrows * variable_borrow_rate + total_stable_borrows * average_stable_borrow_rate) / total_borrows` |
+|`liquidity_cumulative_index` | Interest cumulated by the reserve during the time interval `delta_time`, updated whenever a borrow, deposit, repay, redeem, swap, liquidation event occurs. Expressed in ray |
+|`reserve_normalized_income`| Ongoing interest cumulated by the reserve |
 
 
 
@@ -169,3 +171,11 @@ Parameters: rate, last_update_timestamp
 2. rate_per_second = rate.div(seconds_per_year)
 3. rate_per_second.add(ray).ray_pow(time_difference)
 ```
+
+###  Reserve normalized income (using for increased balance)
+
+```
+cumulated_liquidity_interest = calculate_linear_interest current_liquidity_rate this_timestamp last_update_timestamp
+reserve_normalized_income = cumulated_liquidity_interest.ray_mul(last_liquidity_cumulative_index)
+```
+
